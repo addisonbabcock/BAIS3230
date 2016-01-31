@@ -12,7 +12,7 @@ namespace GolfCourseManager.Models
 		public string FirstName {get; set;}
 		public string LastName { get; set; }
 		
-		enum UserStatus { Active, Unpaid, WaitingApproval, Denied};
+		public enum UserStatus { Active, Unpaid, WaitingApproval, Denied};
 
 		public UserStatus Status { get; set; }
 
