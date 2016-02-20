@@ -1,0 +1,16 @@
+﻿using Microsoft.AspNet.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace GolfCourseManager.Controllers
+{
+    public class UserManagementController : Controller
+    {
+		public IActionResult Register()
+		{
+			return View();
+		}
+    }
+}

@@ -62,8 +62,6 @@ namespace GolfCourseManager
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error");
-
 				// For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
 				try
 				{
