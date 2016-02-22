@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using GolfCourseManager.Models;
+using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,12 @@ namespace GolfCourseManager.Controllers
     public class UserManagementController : Controller
     {
 		public IActionResult Register()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Register(Member member)
 		{
 			return View();
 		}
