@@ -9,15 +9,16 @@ namespace GolfCourseManager.Controllers
 {
     public class UserManagementController : Controller
     {
-		GCMDbContext _dbContext { get; set; }
+		private GCMContext _gcmContext { get; set; }
 
-		UserManagementController(GCMDbContext dbContext)
+		public UserManagementController(GCMContext gcmContext)
 		{
-			_dbContext = dbContext;
+			_gcmContext = gcmContext;
 		}
 
 		public IActionResult Register()
 		{
+			var members = _gcmContext.Members.OrderBy(m => m.GetFullName()).ToList();
 			return View();
 		}
 

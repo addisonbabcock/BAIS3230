@@ -32,7 +32,7 @@ namespace GolfCourseManager
 			Configuration = builder.Build();
 		}
 
-		public IConfigurationRoot Configuration { get; set; }
+		public static IConfigurationRoot Configuration { get; set; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -40,12 +40,12 @@ namespace GolfCourseManager
 			// Add framework services.
 			services.AddEntityFramework()
 				.AddSqlServer()
-				.AddDbContext<GCMDbContext>(options =>
-					options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+				.AddDbContext<GCMContext>();
 
 			services.AddMvc();
 
 			// Add application services.
+			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +68,7 @@ namespace GolfCourseManager
 					using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
 						.CreateScope())
 					{
-						serviceScope.ServiceProvider.GetService<GCMDbContext>()
+						serviceScope.ServiceProvider.GetService<GCMContext>()
 							 .Database.Migrate();
 					}
 				}
