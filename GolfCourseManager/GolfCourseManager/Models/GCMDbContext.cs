@@ -4,6 +4,8 @@ namespace GolfCourseManager.Models
 {
 	public class GCMDbContext : DbContext
     {
-		
+		GCMDbContext()
+		{
+		}
     }
 }

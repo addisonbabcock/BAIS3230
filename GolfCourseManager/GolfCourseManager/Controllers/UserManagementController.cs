@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using GolfCourseManager.Models;
+using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace GolfCourseManager.Controllers
 {
     public class UserManagementController : Controller
     {
+		GCMDbContext _dbContext { get; set; }
+
+		UserManagementController(GCMDbContext dbContext)
+		{
+			_dbContext = dbContext;
+		}
+
 		public IActionResult Register()
 		{
 			return View();
