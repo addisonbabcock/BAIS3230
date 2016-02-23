@@ -20,5 +20,11 @@ namespace GolfCourseManager.Controllers
 		{
 			return View();
 		}
+
+		[HttpPost]
+		public IActionResult Register(Member member)
+		{
+			return View();
+		}
     }
 }
