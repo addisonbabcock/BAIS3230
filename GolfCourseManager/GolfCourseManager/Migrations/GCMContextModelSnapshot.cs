@@ -72,6 +72,8 @@ namespace GolfCourseManager.Migrations
                     b.Property<int>("YardsWhite");
 
                     b.HasKey("HoleNumber");
+
+                    b.HasAlternateKey("GolfCourseId", "HoleNumber");
                 });
 
             modelBuilder.Entity("GolfCourseManager.Models.Member", b =>
@@ -89,7 +91,7 @@ namespace GolfCourseManager.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<int?>("GolfCourseId");
+                    b.Property<int>("GolfCourseId");
 
                     b.Property<string>("LastName");
 
@@ -104,28 +106,37 @@ namespace GolfCourseManager.Migrations
 
             modelBuilder.Entity("GolfCourseManager.Models.Score", b =>
                 {
-                    b.Property<int>("MemberId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("GolfCourseId");
 
                     b.Property<int>("HoleNumber");
 
+                    b.Property<int>("MemberId");
+
                     b.Property<string>("PlayerName");
 
                     b.Property<int>("Strokes");
 
-                    b.HasKey("MemberId");
+                    b.Property<int>("TeeTimeId");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("GolfCourseId", "HoleNumber", "MemberId", "TeeTimeId");
                 });
 
             modelBuilder.Entity("GolfCourseManager.Models.TeeTime", b =>
                 {
-                    b.Property<int>("GolfCourseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("GolfCourseId");
 
                     b.Property<int>("MemberId");
 
-                    b.Property<string>("Player1Name");
+                    b.Property<string>("Player1Name")
+                        .IsRequired();
 
                     b.Property<string>("Player2Name");
 
@@ -135,7 +146,9 @@ namespace GolfCourseManager.Migrations
 
                     b.Property<DateTime>("Start");
 
-                    b.HasKey("GolfCourseId");
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("Start");
                 });
 
             modelBuilder.Entity("GolfCourseManager.Models.Hole", b =>
@@ -150,6 +163,36 @@ namespace GolfCourseManager.Migrations
                     b.HasOne("GolfCourseManager.Models.GolfCourse")
                         .WithMany()
                         .HasForeignKey("GolfCourseId");
+                });
+
+            modelBuilder.Entity("GolfCourseManager.Models.Score", b =>
+                {
+                    b.HasOne("GolfCourseManager.Models.GolfCourse")
+                        .WithMany()
+                        .HasForeignKey("GolfCourseId");
+
+                    b.HasOne("GolfCourseManager.Models.Hole")
+                        .WithMany()
+                        .HasForeignKey("HoleNumber");
+
+                    b.HasOne("GolfCourseManager.Models.Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId");
+
+                    b.HasOne("GolfCourseManager.Models.TeeTime")
+                        .WithMany()
+                        .HasForeignKey("TeeTimeId");
+                });
+
+            modelBuilder.Entity("GolfCourseManager.Models.TeeTime", b =>
+                {
+                    b.HasOne("GolfCourseManager.Models.GolfCourse")
+                        .WithMany()
+                        .HasForeignKey("GolfCourseId");
+
+                    b.HasOne("GolfCourseManager.Models.Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId");
                 });
         }
     }

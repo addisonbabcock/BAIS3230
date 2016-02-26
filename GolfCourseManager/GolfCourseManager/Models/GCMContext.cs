@@ -22,5 +22,14 @@ namespace GolfCourseManager.Models
 
 			base.OnConfiguring(optionsBuilder);
 		}
-    }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<Score>().HasAlternateKey(t => new { t.GolfCourseId, t.HoleNumber, t.MemberId, t.TeeTimeId });
+			modelBuilder.Entity<TeeTime>().HasAlternateKey(t => t.Start);
+			modelBuilder.Entity<Hole>().HasAlternateKey(t => new { t.GolfCourseId, t.HoleNumber });
+		}
+	}
 }
