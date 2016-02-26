@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace GolfCourseManager.Models
 {
     public class GolfCourse
     {
+		[Key]
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public TimeSpan TeeTimeInterval { get; set; }
@@ -27,5 +29,6 @@ namespace GolfCourseManager.Models
 		public DateTime SundayClose { get; set; }
 
 		public IEnumerable<Hole> Holes { get; set; }
+		public IEnumerable<Member> Members { get; set; }
     }
 }

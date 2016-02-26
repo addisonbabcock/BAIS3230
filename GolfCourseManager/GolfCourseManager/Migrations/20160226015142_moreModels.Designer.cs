@@ -8,9 +8,10 @@ using GolfCourseManager.Models;
 namespace GolfCourseManager.Migrations
 {
     [DbContext(typeof(GCMContext))]
-    partial class GCMContextModelSnapshot : ModelSnapshot
+    [Migration("20160226015142_moreModels")]
+    partial class moreModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
