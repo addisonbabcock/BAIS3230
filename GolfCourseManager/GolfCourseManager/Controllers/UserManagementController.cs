@@ -29,6 +29,9 @@ namespace GolfCourseManager.Controllers
 			if (ModelState.IsValid)
 			{
 				var newMember = Mapper.Map<Member>(vm);
+
+				_gcmRepo.AddMember(newMember);
+				ViewBag.Message = "Success!";
 			}
 			return View();
 		}

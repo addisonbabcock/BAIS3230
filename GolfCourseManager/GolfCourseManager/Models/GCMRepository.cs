@@ -14,9 +14,21 @@ namespace GolfCourseManager.Models
 
 		private GCMContext _context;
 
+		public GolfCourse GetGolfCourse()
+		{
+			return _context.GolfCourses.FirstOrDefault();
+		}
+
 		public IEnumerable<TeeTime> GetTeeTimesForMember(int Id)
 		{
 			return _context.TeeTimes.Where(t => t.MemberId == Id).OrderBy(t => t.Start);
+		}
+
+		public void AddMember(Member member)
+		{
+			member.GolfCourse = GetGolfCourse();
+			_context.Members.Add(member);
+			_context.SaveChanges();
 		}
     }
 }
