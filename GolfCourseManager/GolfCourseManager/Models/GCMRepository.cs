@@ -16,7 +16,7 @@ namespace GolfCourseManager.Models
 
 		public GolfCourse GetGolfCourse()
 		{
-			return _context.GolfCourses.FirstOrDefault();
+			return _context.GolfCourses.FirstOrDefault();		//TODO: Figure out how to specify...
 		}
 
 		public IEnumerable<TeeTime> GetTeeTimesForMember(int Id)
