@@ -1,4 +1,5 @@
-﻿using GolfCourseManager.Models;
+﻿using AutoMapper;
+using GolfCourseManager.Models;
 using GolfCourseManager.ViewModels;
 using Microsoft.AspNet.Mvc;
 using System;
@@ -23,8 +24,12 @@ namespace GolfCourseManager.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Register(MemberViewModel member)
+		public IActionResult Register(MemberViewModel vm)
 		{
+			if (ModelState.IsValid)
+			{
+				var newMember = Mapper.Map<Member>(vm);
+			}
 			return View();
 		}
     }

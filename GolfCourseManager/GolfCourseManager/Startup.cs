@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using GolfCourseManager.Models;
 using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using GolfCourseManager.ViewModels;
 
 namespace GolfCourseManager
 {
@@ -86,6 +88,10 @@ namespace GolfCourseManager
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
+			});
+
+			Mapper.Initialize(config => {
+				config.CreateMap<Member, MemberViewModel>().ReverseMap();
 			});
 		}
 
