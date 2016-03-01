@@ -1,4 +1,5 @@
 ﻿using GolfCourseManager.Models;
+using GolfCourseManager.ViewModels;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,21 +10,20 @@ namespace GolfCourseManager.Controllers
 {
     public class UserManagementController : Controller
     {
-		private GCMContext _gcmContext { get; set; }
+		private GCMRepository _gcmRepo { get; set; }
 
-		public UserManagementController(GCMContext gcmContext)
+		public UserManagementController(GCMRepository gcmContext)
 		{
-			_gcmContext = gcmContext;
+			_gcmRepo = gcmContext;
 		}
 
 		public IActionResult Register()
 		{
-			var members = _gcmContext.Members.OrderBy(m => m.GetFullName()).ToList();
 			return View();
 		}
 
 		[HttpPost]
-		public IActionResult Register(Member member)
+		public IActionResult Register(MemberViewModel member)
 		{
 			return View();
 		}

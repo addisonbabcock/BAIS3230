@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using GolfCourseManager.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace GolfCourseManager
 {
@@ -42,10 +43,11 @@ namespace GolfCourseManager
 				.AddSqlServer()
 				.AddDbContext<GCMContext>();
 
-			services.AddMvc();
+			services.AddMvc()
+				.AddJsonOptions(opt => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
 			// Add application services.
-			
+			services.AddScoped<GCMRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

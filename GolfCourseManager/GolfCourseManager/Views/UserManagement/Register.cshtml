@@ -1,11 +1,34 @@
-﻿
+﻿@model GolfCourseManager.ViewModels.MemberViewModel
 @{ 
 	ViewBag.Title = "Register";
+}
+
+@section Scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
 
 <h1>Golf Course Manager - @ViewBag.Title</h1>
 
 <form method="post">
-	First Name: <input name="FirstName" type="text" />
-	Last Name: <input name="LastName" type="text" />
+	<div class="row">
+		<div class="col-md-3 col-md-offset-1">
+			<div asp-validation-summary="ValidationSummary.ModelOnly"></div>
+			<div class="form-group">
+				<label asp-for="FirstName">First Name: </label>
+				<input asp-for="FirstName" type="text" class="form-control" />
+				<span asp-validation-for="FirstName">
+				</span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LastName">Last Name: </label>
+				<input asp-for="LastName" type="text" class="form-control" />
+				<span asp-validation-for="LastName"></span>
+			</div>
+			<div class="form-group">
+				<a asp-controller="Home" asp-action="Index" class="btn btn-default">Cancel</a>
+				<input type="submit" value="Register" class="btn btn-success" />
+			</div>
+		</div>
+	</div>
 </form>
