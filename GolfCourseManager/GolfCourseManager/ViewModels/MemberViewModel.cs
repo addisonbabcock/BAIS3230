@@ -17,5 +17,23 @@ namespace GolfCourseManager.ViewModels
 		[Required]
 		[EmailAddress]
 		public string Email { get; set; }
+
+		[Required]
+		[StringLength(255, MinimumLength = 5)]
+		public string Address1 { get; set; }
+		public string Address2 { get; set; }
+		public string Address3 { get; set; }
+		[Required]
+		[StringLength(255, MinimumLength = 3)]
+		public string City { get; set; }
+		[Required]
+		[StringLength(255, MinimumLength = 2)]
+		public string Country { get; set; }
+		[Required]
+		[StringLength(255, MinimumLength = 2)]
+		public string Province { get; set; }
+		[Required]
+		[StringLength(7, MinimumLength = 7)]
+		public string PostalCode { get; set; }
     }
 }
