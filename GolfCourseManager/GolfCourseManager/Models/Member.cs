@@ -12,7 +12,6 @@ namespace GolfCourseManager.Models
 //		public int GolfCourseId { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-		public string Email { get; set; }
 
 		public enum MemberStatus { Active, Unpaid, Applied, Inactive, Closed }
 		public MemberStatus Status { get; set; } = MemberStatus.Applied;
