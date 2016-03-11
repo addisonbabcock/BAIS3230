@@ -10,10 +10,10 @@ namespace GolfCourseManager.Models
     {
 		[Key]
 		public int Id { get; set; }
-		public int GolfCourseId { get; set; }
-		public int HoleNumber { get; set; }
-		public int MemberId { get; set; }
-		public int TeeTimeId { get; set; }
+//		public int GolfCourseId { get; set; }
+//		public int HoleNumber { get; set; }
+//		public int MemberId { get; set; }
+//		public int TeeTimeId { get; set; }
 		public string PlayerName { get; set; }
 		public int Strokes { get; set; }
 
