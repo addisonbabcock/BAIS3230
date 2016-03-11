@@ -1,4 +1,5 @@
 ﻿using GolfCourseManager.Models;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace GolfCourseManager.Controllers
 			_gcmRepo = gcmRepo;
 		}
 
+		[Authorize]
 		[HttpGet]
 		public IActionResult Reserve()
 		{

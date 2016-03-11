@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,15 +9,28 @@ namespace GolfCourseManager.Models
     public class GCMContextSeedData
     {
 		private GCMContext _context;
+		private UserManager<Member> _userManager;
 
-		public GCMContextSeedData(GCMContext context)
+		public GCMContextSeedData(GCMContext context, UserManager<Member> userManager)
 		{
 			_context = context;
+			_userManager = userManager;
 		}
 
-		public void EnsureSeedData()
+		public async Task EnsureSeedData()
 		{
-			if (_context.GolfCourses.Any())
+			if (await _userManager.FindByEmailAsync("addison.babcock@hotmail.com") == null)
+			{
+				var member = new Member()
+				{
+					UserName = "testlogin",
+					Email = "test.email@hotmail.com"
+				};
+
+				await _userManager.CreateAsync(member, "password");		//yes for real
+			}
+
+			if (!_context.GolfCourses.Any())
 			{
 				//seed data
 				var clubBaist = new GolfCourse()

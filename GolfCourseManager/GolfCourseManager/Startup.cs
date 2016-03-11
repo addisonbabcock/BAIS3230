@@ -13,6 +13,7 @@ using GolfCourseManager.Models;
 using Newtonsoft.Json.Serialization;
 using AutoMapper;
 using GolfCourseManager.ViewModels;
+using Microsoft.AspNet.Mvc;
 
 namespace GolfCourseManager
 {
@@ -45,8 +46,22 @@ namespace GolfCourseManager
 				.AddSqlServer()
 				.AddDbContext<GCMContext>();
 
-			services.AddMvc()
-				.AddJsonOptions(opt => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+			services.AddMvc(config =>
+			{
+#if !DEBUG
+				config.Filters.Add(new RequireHttpsAttribute());
+#endif
+			})
+			.AddJsonOptions(opt => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+
+			services.AddIdentity<Member, IdentityRole>(config =>
+			{
+				config.User.RequireUniqueEmail = true;
+				config.Password.RequiredLength = 8;
+				config.Password.RequireDigit = true;
+				config.Cookies.ApplicationCookie.LoginPath = "/UserManagement/Login";
+			})
+			.AddEntityFrameworkStores<GCMContext>();
 
 			// Add application services.
 			services.AddScoped<GCMRepository>();
@@ -54,7 +69,7 @@ namespace GolfCourseManager
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, GCMContextSeedData seedData)
+		public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, GCMContextSeedData seedData)
 		{
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
@@ -84,6 +99,8 @@ namespace GolfCourseManager
 
 			app.UseStaticFiles();
 
+			app.UseIdentity();
+
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
@@ -95,7 +112,7 @@ namespace GolfCourseManager
 				config.CreateMap<Member, MemberViewModel>().ReverseMap();
 			});
 
-			seedData.EnsureSeedData();
+			await seedData.EnsureSeedData();
 		}
 
 		// Entry point for the application.
