@@ -50,10 +50,11 @@ namespace GolfCourseManager
 
 			// Add application services.
 			services.AddScoped<GCMRepository>();
+			services.AddTransient<GCMContextSeedData>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, GCMContextSeedData seedData)
 		{
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
@@ -93,6 +94,8 @@ namespace GolfCourseManager
 			Mapper.Initialize(config => {
 				config.CreateMap<Member, MemberViewModel>().ReverseMap();
 			});
+
+			seedData.EnsureSeedData();
 		}
 
 		// Entry point for the application.

@@ -29,8 +29,8 @@
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel",
-    "ef": "EntityFramework.Commands"
+    "ef": "EntityFramework.Commands",
+    "web": "Microsoft.AspNet.Server.Kestrel"
   },
 
   "frameworks": {

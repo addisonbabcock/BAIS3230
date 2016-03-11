@@ -19,10 +19,10 @@ namespace GolfCourseManager.Models
 			return _context.GolfCourses.FirstOrDefault();		//TODO: Figure out how to specify...
 		}
 
-		public IEnumerable<TeeTime> GetTeeTimesForMember(int Id)
-		{
-			return _context.TeeTimes.Where(t => t.MemberId == Id).OrderBy(t => t.Start);
-		}
+//		public IEnumerable<TeeTime> GetTeeTimesForMember(int Id)
+//		{
+//			return _context.TeeTimes.Where(t => t.MemberId == Id).OrderBy(t => t.Start);
+//		}
 
 		public void AddMember(Member member)
 		{

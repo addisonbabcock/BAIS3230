@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace GolfCourseManager.Models
 {
-	public class Member
+	public class Member : IdentityUser
 	{
-		[Key]
-		public int Id { get; set; }
-		public int GolfCourseId { get; set; }
+//		public int GolfCourseId { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 

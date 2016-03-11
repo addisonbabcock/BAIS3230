@@ -1,8 +1,9 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
 
 namespace GolfCourseManager.Models
 {
-	public class GCMContext : DbContext
+	public class GCMContext : IdentityDbContext<Member>
     {
 		public DbSet<Member> Members { get; set; }
 		public DbSet<GolfCourse> GolfCourses { get; set; }
@@ -22,9 +23,14 @@ namespace GolfCourseManager.Models
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Score>().HasAlternateKey(t => new { t.GolfCourseId, t.HoleNumber, t.MemberId, t.TeeTimeId });
-			modelBuilder.Entity<TeeTime>().HasAlternateKey(t => t.Start);
-			modelBuilder.Entity<Hole>().HasAlternateKey(t => new { t.GolfCourseId, t.HoleNumber });
+//			modelBuilder.Entity<Score>().HasAlternateKey(t => new { t.GolfCourseId, t.HoleNumber, t.MemberId, t.TeeTimeId });
+//			modelBuilder.Entity<TeeTime>().HasAlternateKey(t => t.Start);
+//			modelBuilder.Entity<Hole>().HasAlternateKey(t => new { t.GolfCourseId, t.HoleNumber });
+		}
+
+		public GCMContext()
+		{
+		//	Database.EnsureCreated();
 		}
 	}
 }
