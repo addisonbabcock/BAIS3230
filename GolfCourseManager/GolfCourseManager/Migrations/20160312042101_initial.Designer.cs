@@ -8,7 +8,7 @@ using GolfCourseManager.Models;
 namespace GolfCourseManager.Migrations
 {
     [DbContext(typeof(GCMContext))]
-    [Migration("20160311043258_initial")]
+    [Migration("20160312042101_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,10 +59,12 @@ namespace GolfCourseManager.Migrations
 
             modelBuilder.Entity("GolfCourseManager.Models.Hole", b =>
                 {
-                    b.Property<int>("HoleNumber")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("GolfCourseId");
+                    b.Property<int>("GolfCourseId");
+
+                    b.Property<int>("HoleNumber");
 
                     b.Property<int>("Par");
 
@@ -72,7 +74,7 @@ namespace GolfCourseManager.Migrations
 
                     b.Property<int>("YardsWhite");
 
-                    b.HasKey("HoleNumber");
+                    b.HasKey("Id");
                 });
 
             modelBuilder.Entity("GolfCourseManager.Models.Member", b =>
@@ -150,7 +152,7 @@ namespace GolfCourseManager.Migrations
 
                     b.Property<int?>("GolfCourseId");
 
-                    b.Property<int?>("HoleHoleNumber");
+                    b.Property<int?>("HoleId");
 
                     b.Property<string>("MemberId");
 
@@ -290,7 +292,7 @@ namespace GolfCourseManager.Migrations
 
                     b.HasOne("GolfCourseManager.Models.Hole")
                         .WithMany()
-                        .HasForeignKey("HoleHoleNumber");
+                        .HasForeignKey("HoleId");
 
                     b.HasOne("GolfCourseManager.Models.Member")
                         .WithMany()

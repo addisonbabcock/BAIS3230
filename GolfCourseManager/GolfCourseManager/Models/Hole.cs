@@ -4,8 +4,9 @@ namespace GolfCourseManager.Models
 {
 	public class Hole
     {
-//		public int GolfCourseId { get; set; }
 		[Key]
+		public int Id { get; set; }
+		public int GolfCourseId { get; set; }
 		public int HoleNumber { get; set; }
 		public int Par { get; set; }
 		public int YardsWhite { get; set; }

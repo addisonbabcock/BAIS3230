@@ -28,7 +28,7 @@ namespace GolfCourseManager.Models
 		public DateTime SundayOpen { get; set; }
 		public DateTime SundayClose { get; set; }
 
-		public IEnumerable<Hole> Holes { get; set; }
-		public IEnumerable<Member> Members { get; set; }
+		public ICollection<Hole> Holes { get; set; }
+		public ICollection<Member> Members { get; set; }
     }
 }

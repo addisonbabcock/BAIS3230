@@ -53,9 +53,10 @@ namespace GolfCourseManager.Migrations
                 name: "Hole",
                 columns: table => new
                 {
-                    HoleNumber = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GolfCourseId = table.Column<int>(nullable: true),
+                    GolfCourseId = table.Column<int>(nullable: false),
+                    HoleNumber = table.Column<int>(nullable: false),
                     Par = table.Column<int>(nullable: false),
                     YardsBlue = table.Column<int>(nullable: false),
                     YardsRed = table.Column<int>(nullable: false),
@@ -63,13 +64,13 @@ namespace GolfCourseManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hole", x => x.HoleNumber);
+                    table.PrimaryKey("PK_Hole", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Hole_GolfCourse_GolfCourseId",
                         column: x => x.GolfCourseId,
                         principalTable: "GolfCourse",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -230,7 +231,7 @@ namespace GolfCourseManager.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     GolfCourseId = table.Column<int>(nullable: true),
-                    HoleHoleNumber = table.Column<int>(nullable: true),
+                    HoleId = table.Column<int>(nullable: true),
                     MemberId = table.Column<string>(nullable: true),
                     PlayerName = table.Column<string>(nullable: true),
                     Strokes = table.Column<int>(nullable: false),
@@ -246,10 +247,10 @@ namespace GolfCourseManager.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Score_Hole_HoleHoleNumber",
-                        column: x => x.HoleHoleNumber,
+                        name: "FK_Score_Hole_HoleId",
+                        column: x => x.HoleId,
                         principalTable: "Hole",
-                        principalColumn: "HoleNumber",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Score_Member_MemberId",

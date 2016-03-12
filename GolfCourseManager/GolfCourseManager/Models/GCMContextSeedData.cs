@@ -19,17 +19,6 @@ namespace GolfCourseManager.Models
 
 		public async Task EnsureSeedData()
 		{
-			if (await _userManager.FindByEmailAsync("addison.babcock@hotmail.com") == null)
-			{
-				var member = new Member()
-				{
-					UserName = "testlogin",
-					Email = "test.email@hotmail.com"
-				};
-
-				await _userManager.CreateAsync(member, "password");		//yes for real
-			}
-
 			if (!_context.GolfCourses.Any())
 			{
 				//seed data
@@ -37,8 +26,8 @@ namespace GolfCourseManager.Models
 				{
 					Name = "Club BAIST",
 					TeeTimeInterval = new TimeSpan(hours: 0, minutes: 7, seconds: 30),
-					MondayOpen = new DateTime(year: 0, month: 0, day: 0, hour: 10, minute: 0, second: 0),
-					MondayClose = new DateTime(year:0, month: 0, day: 0, hour: 20, minute: 0, second: 0),
+					MondayOpen = new DateTime(year: 1900, month: 1, day: 1, hour: 10, minute: 0, second: 0),
+					MondayClose = new DateTime(year:1900, month: 1, day: 1, hour: 20, minute: 0, second: 0),
 				};
 
 				clubBaist.TuesdayOpen = clubBaist.WednesdayOpen = clubBaist.ThursdayOpen = clubBaist.FridayOpen = clubBaist.SaturdayOpen = clubBaist.SundayOpen = clubBaist.MondayOpen;
@@ -53,15 +42,35 @@ namespace GolfCourseManager.Models
 						YardsWhite = 300,
 						YardsBlue = 310,
 						YardsRed = 320
+					},
+					new Hole()
+					{
+						HoleNumber = 2,
+						Par = 4,
+						YardsWhite = 350,
+						YardsBlue = 360,
+						YardsRed = 370
 					}
-
 				};
 
 				_context.GolfCourses.Add(clubBaist);
 				_context.Holes.AddRange(clubBaist.Holes);
 
 				_context.SaveChanges();
+
+				if (await _userManager.FindByEmailAsync("test.email@hotmail.com") == null)
+				{
+					var member = new Member()
+					{
+						UserName = "testlogin",
+						Email = "test.email@hotmail.com",
+						GolfCourse = clubBaist,
+					};
+
+					var result = await _userManager.CreateAsync(member, "P@ssword1");       //yup...
+					var waithere = true;
+				}
 			}
 		}
-    }
+	}
 }
