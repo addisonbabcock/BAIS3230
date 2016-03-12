@@ -27,7 +27,17 @@ namespace GolfCourseManager.Models
 
 		public string GetFullName()
 		{
-			return LastName + ", " + FirstName;
+			if (!String.IsNullOrWhiteSpace(FirstName))
+			{
+				if (!String.IsNullOrWhiteSpace(LastName))
+				{
+					return FirstName + " " + LastName;
+				}
+
+				return FirstName;
+			}
+
+			return "Unknown Name";
 		}
     }
 }

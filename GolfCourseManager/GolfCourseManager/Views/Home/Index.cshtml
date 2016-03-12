@@ -4,8 +4,8 @@
 
 <h1>Golf Course Manager - @ViewBag.Title</h1>
 
-@if (User.Identity.IsAuthenticated)
+@if (!String.IsNullOrWhiteSpace(ViewBag.memberName))
 {
-	<h2>Welcome back, @User.Identity.Name</h2>
+	<h2>Welcome back, @ViewBag.memberName</h2>
 }
 
