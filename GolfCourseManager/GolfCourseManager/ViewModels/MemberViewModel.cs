@@ -35,5 +35,12 @@ namespace GolfCourseManager.ViewModels
 		[Required]
 		[StringLength(7, MinimumLength = 7)]
 		public string PostalCode { get; set; }
+
+		[Required]
+		public string Username { get; set; }
+		[Required]
+		public string Password { get; set; }
+		[Required]
+		public string PasswordConfirm { get; set; }
     }
 }

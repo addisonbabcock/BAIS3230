@@ -4,3 +4,8 @@
 
 <h1>Golf Course Manager - @ViewBag.Title</h1>
 
+@if (User.Identity.IsAuthenticated)
+{
+	<h2>Welcome back, @User.Identity.Name</h2>
+}
+

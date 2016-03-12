@@ -13,13 +13,15 @@ namespace GolfCourseManager.Controllers
     public class UserManagementController : Controller
     {
 		private SignInManager<Member> _signInManager;
+		private UserManager<Member> _userManager;
 
 		private GCMRepository _gcmRepo { get; set; }
 
-		public UserManagementController(GCMRepository gcmContext, SignInManager<Member> signInManager)
+		public UserManagementController(GCMRepository gcmContext, SignInManager<Member> signInManager, UserManager<Member> userManager)
 		{
 			_gcmRepo = gcmContext;
 			_signInManager = signInManager;
+			_userManager = userManager;
 		}
 
 		public IActionResult Register()
@@ -28,14 +30,37 @@ namespace GolfCourseManager.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Register(MemberViewModel vm)
+		public async Task<IActionResult> Register(MemberViewModel vm)
 		{
+			if (vm.Password != vm.PasswordConfirm)
+			{
+				ModelState.AddModelError("PasswordConfirm", "Passwords must match.");
+			}
+
 			if (ModelState.IsValid)
 			{
 				var newMember = Mapper.Map<Member>(vm);
+				newMember.GolfCourse = _gcmRepo.GetGolfCourse();
 
-				_gcmRepo.AddMember(newMember);
-				ViewBag.Message = "Success!";
+				var result = await _userManager.CreateAsync(newMember, vm.Password);
+
+				if (result.Succeeded)
+				{
+					var signInResult = await _signInManager.PasswordSignInAsync(newMember.UserName, vm.Password, true, false);
+
+					if (signInResult.Succeeded)
+					{
+						return RedirectToAction("Index", "Home");
+					}
+					else
+					{
+						return RedirectToAction("Login", "UserManagement");
+					}
+				}
+				else
+				{
+					ModelState.AddModelError("", result.Errors.FirstOrDefault().Description);
+				}
 			}
 			return View();
 		}
