@@ -10,22 +10,17 @@ namespace GolfCourseManager.Controllers
 {
     public class HomeController : Controller
     {
-		private SignInManager<Member> _signInManager;
-		private UserManager<Member> _userManager;
+		private GCMRepository _gcmRepo;
 
-		public HomeController(SignInManager<Member> signinManager, UserManager<Member> userManager)
+		public HomeController(GCMRepository gcmRepo)
 		{
-			_signInManager = signinManager;
-			_userManager = userManager;
+			_gcmRepo = gcmRepo;
 		}
 
 		public async Task<IActionResult> Index()
 		{
-			if (User.Identity.IsAuthenticated)
-			{
-				var member = await _userManager.FindByNameAsync(User.Identity.Name);
-				ViewBag.memberName = member.GetFullName();
-			}
+			var member = await _gcmRepo.GetLoggedInMemberAsync(User);
+			ViewBag.memberName = member.GetFullName();
 
 			return View();
 		}
