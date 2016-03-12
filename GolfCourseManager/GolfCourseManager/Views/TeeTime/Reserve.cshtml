@@ -35,15 +35,6 @@
 		<label asp-for="Start" class="col-md-2 control-label">Start Time</label>
 		<input asp-for="Start" class="form-control" type="text" />
 		<span asp-validation-for="Start" class="text-danger" />
-
-		<script type="text/javascript">
-			jQuery('#Start').datetimepicker({
-				datepicker: true,
-				allowtimes: ['12:00', '13:00'],
-				lang: 'en',
-				inline: true
-			})
-		</script>
 	</div>
 	<div class="form-group col-md-2">
 		<input type="submit" value="Create" class="btn btn-success" />
