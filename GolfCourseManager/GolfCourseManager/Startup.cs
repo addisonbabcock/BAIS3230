@@ -48,9 +48,6 @@ namespace GolfCourseManager
 
 			services.AddMvc(config =>
 			{
-#if !DEBUG
-				config.Filters.Add(new RequireHttpsAttribute());
-#endif
 			})
 			.AddJsonOptions(opt => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
