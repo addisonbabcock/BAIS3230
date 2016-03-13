@@ -28,12 +28,13 @@ namespace GolfCourseManager.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public IActionResult Reserve(ReserveViewModel vm)
+		public async Task<IActionResult> Reserve(ReserveViewModel vm)
 		{
 			if (ModelState.IsValid)
 			{
 				var teeTime = Mapper.Map<TeeTime>(vm);
 				teeTime.GolfCourse = _gcmRepo.GetGolfCourse();
+				teeTime.Member = await _gcmRepo.GetLoggedInMemberAsync(User);
 			}
 
 			return View();
