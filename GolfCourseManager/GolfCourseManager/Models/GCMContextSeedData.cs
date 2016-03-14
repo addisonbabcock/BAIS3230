@@ -41,7 +41,8 @@ namespace GolfCourseManager.Models
 						Par = 3,
 						YardsWhite = 300,
 						YardsBlue = 310,
-						YardsRed = 320
+						YardsRed = 320,
+						GolfCourse = clubBaist
 					},
 					new Hole()
 					{
@@ -49,7 +50,152 @@ namespace GolfCourseManager.Models
 						Par = 4,
 						YardsWhite = 350,
 						YardsBlue = 360,
-						YardsRed = 370
+						YardsRed = 370,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 3,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 4,
+						Par = 4,
+						YardsWhite = 313,
+						YardsBlue = 323,
+						YardsRed = 333,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 5,
+						Par = 4,
+						YardsWhite = 432,
+						YardsBlue = 442,
+						YardsRed = 452,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 6,
+						Par = 4,
+						YardsWhite = 543,
+						YardsBlue = 553,
+						YardsRed = 563,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 7,
+						Par = 4,
+						YardsWhite = 123,
+						YardsBlue = 133,
+						YardsRed = 134,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 8,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 9,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 10,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 11,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 12,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 13,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 14,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 15,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 16,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 17,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
+					},
+					new Hole()
+					{
+						HoleNumber = 18,
+						Par = 4,
+						YardsWhite = 310,
+						YardsBlue = 320,
+						YardsRed = 330,
+						GolfCourse = clubBaist
 					}
 				};
 
@@ -68,7 +214,6 @@ namespace GolfCourseManager.Models
 					};
 
 					var result = await _userManager.CreateAsync(member, "P@ssword1");       //yup...
-					var waithere = true;
 				}
 			}
 		}
