@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace GolfCourseManager.Models
     {
 		private GCMContext _context;
 		private UserManager<Member> _userManager;
+		private RoleManager<IdentityRole> _roleManager;
 
-		public GCMContextSeedData(GCMContext context, UserManager<Member> userManager)
+		public GCMContextSeedData(GCMContext context, UserManager<Member> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_context = context;
 			_userManager = userManager;
+			_roleManager = roleManager;
 		}
 
 		public async Task EnsureSeedData()
@@ -214,6 +217,27 @@ namespace GolfCourseManager.Models
 					};
 
 					var result = await _userManager.CreateAsync(member, "P@ssword1");       //yup...
+
+					var admin = new Member()
+					{
+						UserName = "admin",
+						Email = "admin@gcm.com",
+						GolfCourse = clubBaist,
+					};
+
+					await _userManager.CreateAsync(admin, "Adm1nP@ss");
+
+					if (!await _roleManager.RoleExistsAsync("admin"))
+					{
+						var adminRole = new IdentityRole("admin");
+						await _roleManager.CreateAsync(adminRole);
+
+						var userRole = new IdentityRole("user");
+						await _roleManager.CreateAsync(userRole);
+
+						await _userManager.AddToRoleAsync(member, "user");
+						await _userManager.AddToRoleAsync(admin, "admin");
+					}
 				}
 			}
 		}

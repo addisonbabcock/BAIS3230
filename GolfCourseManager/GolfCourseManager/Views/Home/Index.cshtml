@@ -6,6 +6,10 @@
 
 @if (!String.IsNullOrWhiteSpace(ViewBag.memberName))
 {
-	<h2>Welcome back, @ViewBag.memberName</h2>
+	<h2>Welcome back, @ViewBag.memberName.</h2>
 }
 
+@if (ViewBag.isAdmin)
+{
+	<h2 class="text-warning">You are logged in as an admin.</h2>
+}

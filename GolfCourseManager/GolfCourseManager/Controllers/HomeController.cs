@@ -26,6 +26,15 @@ namespace GolfCourseManager.Controllers
 				ViewBag.memberName = member.GetFullName();
 			}
 
+			if (member != null && await _gcmRepo.IsAdminAsync(member))
+			{
+				ViewBag.isAdmin = true;
+			}
+			else
+			{
+				ViewBag.isAdmin = false;
+			}
+
 			return View();
 		}
     }

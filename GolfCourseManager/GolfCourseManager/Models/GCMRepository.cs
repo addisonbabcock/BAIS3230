@@ -5,23 +5,48 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using GolfCourseManager.BusinessLogic;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GolfCourseManager.Models
 {
     public class GCMRepository
     {
-		public GCMRepository(GCMContext context, UserManager<Member> userManager)
+		public GCMRepository(GCMContext context, UserManager<Member> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_context = context;
 			_userManager = userManager;
+			_roleManager = roleManager;
 		}
 
 		private GCMContext _context;
 		private UserManager<Member> _userManager;
+		private RoleManager<IdentityRole> _roleManager;
 
 		public GolfCourse GetGolfCourse()
 		{
 			return _context.GolfCourses.FirstOrDefault();		//TODO: Figure out how to specify...
+		}
+
+		public async Task<bool> IsAdminAsync(Member member)
+		{
+			var roles = await _userManager.GetRolesAsync(member);
+			if (roles.Contains("admin"))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		public async Task<bool> IsUserAsync(Member member)
+		{
+			var roles = await _userManager.GetRolesAsync(member);
+			if (roles.Contains("user"))
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		public async Task<Member> GetLoggedInMemberAsync(ClaimsPrincipal user)
