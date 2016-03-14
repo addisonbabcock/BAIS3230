@@ -20,7 +20,11 @@ namespace GolfCourseManager.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var member = await _gcmRepo.GetLoggedInMemberAsync(User);
-			ViewBag.memberName = member.GetFullName();
+
+			if (member != null)
+			{
+				ViewBag.memberName = member.GetFullName();
+			}
 
 			return View();
 		}

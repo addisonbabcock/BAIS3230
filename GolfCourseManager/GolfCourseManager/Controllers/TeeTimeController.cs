@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using GolfCourseManager.BusinessLogic;
 
 namespace GolfCourseManager.Controllers
 {
@@ -21,15 +22,28 @@ namespace GolfCourseManager.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult Reserve()
+		public IActionResult SelectDate()
 		{
+			//First the user selects a date
 			return View();
+		}
+
+		[Authorize]
+		[HttpPost]
+		public IActionResult Reserve(SelectDateViewModel vm)
+		{
+			//Second the user selects a time and enters the party information
+			var logic = new TeeTimeLogic(_gcmRepo);
+			var availableTeeTimes = logic.GetAvailableTeeTimesForDate(vm.Date.Date);
+
+			return View(availableTeeTimes);
 		}
 
 		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> Reserve(ReserveViewModel vm)
 		{
+			//Third the reservation is created.
 			if (ModelState.IsValid)
 			{
 				var teeTime = Mapper.Map<TeeTime>(vm);
