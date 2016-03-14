@@ -30,11 +30,11 @@ namespace GolfCourseManager.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public IActionResult SelectDate(SelectDateViewModel vm)
+		public IActionResult SelectDate(SelectDateViewModel sdvm)
 		{
 			//Second the user selects a time and enters the party information
 			//This will be done on the reserve view
-			return RedirectToAction("Reserve", vm);
+			return RedirectToAction("Reserve", sdvm);
 		}
 
 		[Authorize]
@@ -53,7 +53,7 @@ namespace GolfCourseManager.Controllers
 		
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Reserve(ReserveViewModel rvm)
+		public async Task<IActionResult> CreateReservation(ReserveViewModel rvm)
 		{
 			//Third the reservation is created.
 			if (ModelState.IsValid)
@@ -74,6 +74,13 @@ namespace GolfCourseManager.Controllers
 				if (success)
 				{
 					//redirect to success page
+					var rcvm = new ReservationCreatedViewModel();
+					rcvm.Reservations = new List<DateTime>()
+					{
+						new DateTime(teeTime.Start.Ticks)
+					};
+
+					return View(rcvm);
 				}
 
 				ModelState.AddModelError("StartTime", "Start Time already reserved.");
@@ -83,5 +90,5 @@ namespace GolfCourseManager.Controllers
 			//do something..?
 			return RedirectToAction("Reserve", new SelectDateViewModel(rvm.SelectedDate));
 		}
-    }
+	}
 }
