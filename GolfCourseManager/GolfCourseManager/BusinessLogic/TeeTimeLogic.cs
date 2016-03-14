@@ -23,7 +23,8 @@ namespace GolfCourseManager.BusinessLogic
 		public bool IsValidTeeTimeStart(DateTime startTime)
 		{
 			var validTimes = GetValidTeeTimesForDate(startTime);
-			if (validTimes.Find(t => t == startTime) == null)
+			var found = validTimes.Find(t => t.Ticks == startTime.Ticks);
+			if (found == DateTime.MinValue)
 			{
 				return false;
 			}

@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace GolfCourseManager.ViewModels
 {
-    public class SelectDateViewModel
-    {
+	public class SelectDateViewModel
+	{
 		[Required]
 		public DateTime Date { get; set; }
+
+		public SelectDateViewModel()
+		{
+		}
+
+		public SelectDateViewModel(DateTime date)
+		{
+			Date = date;
+		}
     }
 }

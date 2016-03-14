@@ -14,6 +14,8 @@ namespace GolfCourseManager.ViewModels
 		public string Player3Name { get; set; }
 		public string Player4Name { get; set; }
 		[Required]
-		public DateTime Start { get; set; }
+		public DateTime StartTime { get; set; }
+
+		public DateTime SelectedDate { get; set; }		//hidden
 	}
 }
