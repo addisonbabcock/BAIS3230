@@ -46,6 +46,12 @@ namespace GolfCourseManager.Controllers
 
 				if (result.Succeeded)
 				{
+					//don't try to sign in when an admin is registering a new user
+					if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+					{
+						return RedirectToAction("Index", "Home");
+					}
+
 					var signInResult = await _signInManager.PasswordSignInAsync(newMember.UserName, vm.Password, true, false);
 
 					if (signInResult.Succeeded)

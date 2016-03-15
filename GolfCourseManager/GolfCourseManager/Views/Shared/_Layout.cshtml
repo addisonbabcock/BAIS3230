@@ -31,11 +31,15 @@
                     <a asp-controller="Home" asp-action="Index" class="navbar-brand">Golf Course Manager</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+					<ul class="nav navbar-nav">
+						<li><a asp-controller="Home" asp-action="Index">Home</a></li>
 						@if (User.Identity.IsAuthenticated)
 						{
 							<li><a asp-controller="TeeTime" asp-action="SelectDate">Reserve Tee Time</a></li>
+							if (User.IsInRole("admin"))
+							{
+								<li><a asp-controller="UserManagement" asp-action="Register">Register</a></li>
+							}
 							<li><a asp-controller="UserManagement" asp-action="Logout">Logout</a></li>
 						}
 						else
@@ -43,7 +47,8 @@
 							<li><a asp-controller="UserManagement" asp-action="Register">Register</a></li>
 							<li><a asp-controller="UserManagement" asp-action="Login">Login</a></li>
 						}
-                    </ul>
+					</ul>
+
                 </div>
             </div>
         </div>
