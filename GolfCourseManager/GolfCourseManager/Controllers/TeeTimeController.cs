@@ -73,7 +73,7 @@ namespace GolfCourseManager.Controllers
 
 				if (success)
 				{
-					//redirect to success page
+					//show success page
 					var rcvm = new ReservationCreatedViewModel();
 					rcvm.Reservations = new List<DateTime>()
 					{
@@ -89,6 +89,70 @@ namespace GolfCourseManager.Controllers
 
 			//do something..?
 			return RedirectToAction("Reserve", new SelectDateViewModel(rvm.SelectedDate));
+		}
+
+		[Authorize]
+		[HttpGet]
+		public IActionResult CreateStandingReservation()
+		{
+			var logic = new TeeTimeLogic(_gcmRepo);
+			var rivm = new ReserveInputViewModel();
+			rivm.AvailableTeeTimes = logic.GetValidTeeTimesForDate(DateTime.Now);
+			ViewBag.InputViewModel = rivm;
+
+			return View();
+		}
+		
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> CreateReservation(StandingReservationViewModel srvm)
+		{
+			var rcvm = new ReservationCreatedViewModel();
+
+			if (srvm.StartDate < DateTime.Now)
+			{
+				rcvm.FailureReason = "Start Date cannot be in the past.";
+				return View(rcvm);
+			}
+
+			if (srvm.EndDate < DateTime.Now)
+			{
+				rcvm.FailureReason = "End Date cannot be in the past.";
+				return View(rcvm);
+			}
+
+			if (srvm.EndDate >= srvm.StartDate)
+			{
+				rcvm.FailureReason = "End Date must be after Start Date.";
+				return View(rcvm);
+			}
+
+			for (var current = srvm.StartDate; current <= srvm.EndDate; current += TimeSpan.FromDays(7))
+			{
+				var teeTime = Mapper.Map<TeeTime>(srvm);
+				teeTime.GolfCourse = _gcmRepo.GetGolfCourse();
+				teeTime.Member = await _gcmRepo.GetLoggedInMemberAsync(User);
+				teeTime.Start = new DateTime(
+					current.Year,
+					current.Month,
+					current.Day,
+					srvm.StartTime.Hour,
+					srvm.StartTime.Minute,
+					srvm.StartTime.Second);
+
+				var success = _gcmRepo.ReserveTeeTime(teeTime);
+
+				if (success)
+				{
+					rcvm.Reservations.Add(teeTime.Start);
+				}
+				else
+				{
+					rcvm.Failures.Add(teeTime.Start);
+				}
+			}
+
+			return View(rcvm);
 		}
 	}
 }

@@ -36,6 +36,7 @@
 						@if (User.Identity.IsAuthenticated)
 						{
 							<li><a asp-controller="TeeTime" asp-action="SelectDate">Reserve Tee Time</a></li>
+							<li><a asp-controller="TeeTime" asp-action="CreateStandingReservation">Standing Reservation</a></li>
 							if (User.IsInRole("admin"))
 							{
 								<li><a asp-controller="UserManagement" asp-action="Register">Register</a></li>

@@ -15,7 +15,7 @@
 		<ul class="bg-success">
 			@if (Model.Reservations == null)
 			{
-				<li class="alert-info">No reservations created.</li>
+				<li class="alert alert-info">No reservations created.</li>
 			}
 			else
 			{
@@ -25,5 +25,25 @@
 				}
 			}
 		</ul>
+		<ul class="bg-danger">
+			@if (!String.IsNullOrWhiteSpace(Model.FailureReason))
+			{
+				<li class="alert alert-danger">@Model.FailureReason</li>
+			}
+			@if (Model.Failures == null)
+			{
+				<li class="alert alert-danger">No failures.</li>
+			}
+			else
+			{
+				foreach (var failureTime in Model.Failures)
+				{
+					<li class="alert alert-danger">@failureTime.ToString()</li>
+				}
+				<li class="alert alert-danger">Failed reservations are likely from conflicts with a previous reservation.</li>
+			}
+		</ul>
+
+
 	</div>
 </div>

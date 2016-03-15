@@ -1,0 +1,72 @@
+﻿@model GolfCourseManager.ViewModels.StandingReservationViewModel
+
+@{
+	ViewData["Title"] = "Create Standing Reservation";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reserve</h2>
+
+<form asp-action="CreateReservation" method="post">
+	<h4>Standing Reservation</h4>
+	<hr />
+	<div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+	<div class="form-group">
+		<label asp-for="Player1Name" class="col-md-2 control-label">Player 1</label>
+		<input asp-for="Player1Name" class="form-control" />
+		<span asp-validation-for="Player1Name" class="text-danger" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Player2Name" class="col-md-2 control-label">Player 2</label>
+		<input asp-for="Player2Name" class="form-control" />
+		<span asp-validation-for="Player2Name" class="text-danger" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Player3Name" class="col-md-2 control-label">Player 3</label>
+		<input asp-for="Player3Name" class="form-control" />
+		<span asp-validation-for="Player3Name" class="text-danger" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Player4Name" class="col-md-2 control-label">Player 4</label>
+		<input asp-for="Player4Name" class="form-control" />
+		<span asp-validation-for="Player4Name" class="text-danger" />
+	</div>
+	<div class="form-group">
+		<label asp-for="StartTime" class="col-md-2 control-label">Tee Time</label>
+		<select asp-for="StartTime" class="form-control">
+			@if (ViewBag.InputViewModel == null || ViewBag.InputViewModel.AvailableTeeTimes.Count == 0)
+			{
+				<option value="None">No tee times for the date selected.</option>
+			}
+			else
+			{
+				foreach (var availableTime in ViewBag.InputViewModel.AvailableTeeTimes)
+				{
+					<option value="@availableTime.ToString("T")">@availableTime.ToString("T")</option>
+				}
+			}
+		</select>
+
+		<span asp-validation-for="StartTime" class="text-danger" />
+	</div>
+	<div class="form-group">
+		<label asp-for="StartDate" class="col-md-2 control-label">Start Date</label>
+		<input type="date" asp-for="StartDate" min="@DateTime.Now" />
+		<span asp-validation-for="StartDate" class="text-danger" />
+	</div>
+	<div class="form-group">
+		<label asp-for="EndDate" class="col-md-2 control-label">End Date</label>
+		<input type="date" asp-for="EndDate" min="@DateTime.Now" />
+		<span asp-validation-for="EndDate" class="text-danger" />
+	</div>
+	<div class="form-group col-md-2">
+		<input type="submit" value="Create" class="btn btn-success" />
+		<a asp-controller="Home" asp-action="Index" class="btn btn-default">Cancel</a>
+	</div>
+</form>
+
+@section scripts {
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -108,6 +108,7 @@ namespace GolfCourseManager
 			Mapper.Initialize(config => {
 				config.CreateMap<Member, MemberViewModel>().ReverseMap();
 				config.CreateMap<TeeTime, ReserveViewModel>().ReverseMap();
+				config.CreateMap<TeeTime, StandingReservationViewModel>().ReverseMap();
 			});
 
 			await seedData.EnsureSeedData();
