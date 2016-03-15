@@ -7,8 +7,8 @@ namespace GolfCourseManager.ViewModels
 {
     public class ReservationCreatedViewModel
     {
-		public List<DateTime> Reservations { get; set; }
-		public List<DateTime> Failures { get; set; }
+		public List<DateTime> Reservations { get; set; } = new List<DateTime>();
+		public List<DateTime> Failures { get; set; } = new List<DateTime>();
 		public string FailureReason { get; set; }
     }
 }

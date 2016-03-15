@@ -93,7 +93,7 @@ namespace GolfCourseManager.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult CreateStandingReservation()
+		public IActionResult StandingReserve()
 		{
 			var logic = new TeeTimeLogic(_gcmRepo);
 			var rivm = new ReserveInputViewModel();
@@ -105,7 +105,7 @@ namespace GolfCourseManager.Controllers
 		
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> CreateReservation(StandingReservationViewModel srvm)
+		public async Task<IActionResult> CreateStandingReservation(StandingReservationViewModel srvm)
 		{
 			var rcvm = new ReservationCreatedViewModel();
 
@@ -121,7 +121,7 @@ namespace GolfCourseManager.Controllers
 				return View(rcvm);
 			}
 
-			if (srvm.EndDate >= srvm.StartDate)
+			if (srvm.EndDate <= srvm.StartDate)
 			{
 				rcvm.FailureReason = "End Date must be after Start Date.";
 				return View(rcvm);
