@@ -24,7 +24,7 @@ namespace GolfCourseManager.Models
 
 		public GolfCourse GetGolfCourse()
 		{
-			return _context.GolfCourses.FirstOrDefault();		//TODO: Figure out how to specify...
+			return _context.GolfCourses.FirstOrDefault();
 		}
 
 		public async Task<bool> IsAdminAsync(Member member)
