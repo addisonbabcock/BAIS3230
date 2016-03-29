@@ -42,6 +42,10 @@
 								<li><a asp-controller="UserManagement" asp-action="Register">Register</a></li>
 								<li><a asp-controller="TeeTime" asp-action="TeeTimes">View Tee Times</a></li>
 							}
+							else
+							{
+								<li><a asp-controller="Scores" asp-action="Index">Scores</a></li>
+							}
 							<li><a asp-controller="UserManagement" asp-action="Logout">Logout</a></li>
 						}
 						else
