@@ -154,5 +154,37 @@ namespace GolfCourseManager.Controllers
 
 			return View(rcvm);
 		}
+
+		[Authorize(Roles = "admin")]
+		[HttpGet]
+		public IActionResult TeeTimes(DateTime date)
+		{
+			var vm = new DailyTeeTimesViewModel();
+			if (date == DateTime.MinValue)
+			{
+				vm.Date = DateTime.Today;
+			}
+			else
+			{
+				vm.Date = date;
+			}
+
+			var reservations = _gcmRepo.GetReservedTeeTimesForDate(vm.Date);
+			vm.Reservations = new List<ReserveViewModel>();
+			foreach (var reservation in reservations)
+			{
+				var reserveVM = new ReserveViewModel()
+				{
+					Player1Name = reservation.Player1Name,
+					Player2Name = reservation.Player2Name,
+					Player3Name = reservation.Player3Name,
+					Player4Name = reservation.Player4Name,
+					StartTime = reservation.Start
+				};
+				vm.Reservations.Add(reserveVM);
+			}
+
+			return View(vm);
+		}
 	}
 }

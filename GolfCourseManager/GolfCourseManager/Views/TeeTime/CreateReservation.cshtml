@@ -36,11 +36,15 @@
 			}
 			else
 			{
-				foreach (var failureTime in Model.Failures)
+				@foreach (var failureTime in Model.Failures)
 				{
 					<li class="alert alert-danger">@failureTime.ToString()</li>
 				}
-				<li class="alert alert-danger">Failed reservations are likely from conflicts with a previous reservation.</li>
+
+				@if (Model.Failures.Count != 0)
+				{
+					<li class="alert alert-danger">Failed reservations are likely from conflicts with a previous reservation.</li>
+				}
 			}
 		</ul>
 
