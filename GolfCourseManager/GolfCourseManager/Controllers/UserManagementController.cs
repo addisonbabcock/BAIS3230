@@ -122,7 +122,7 @@ namespace GolfCourseManager.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		[Authorize(Roles = "admin")]
+		[Authorize]
 		[HttpGet]
 		public async Task<IActionResult> ViewMember(Member member)
 		{
@@ -145,7 +145,7 @@ namespace GolfCourseManager.Controllers
 			return View(memberVM);
 		}
 
-		[Authorize(Roles = "admin")]
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> UpdateMember(MemberViewModel vm)
 		{
