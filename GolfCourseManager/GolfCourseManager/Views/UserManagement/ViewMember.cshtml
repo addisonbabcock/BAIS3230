@@ -1,0 +1,91 @@
+﻿
+@model GolfCourseManager.ViewModels.MemberViewModel
+@{
+	ViewBag.Title = "Edit Member";
+}
+
+@section Scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h1>Golf Course Manager - @ViewBag.Title</h1>
+		<form method="get" asp-action="ViewMember">
+			<h3>Find Member</h3>
+			<div asp-validation-summary="ValidationSummary.ModelOnly"></div>
+			<div class="form-group">
+				<label asp-for="Email">Email:</label>
+				<input asp-for="Email" type="text" class="form-control" />
+				<span asp-validation-for="Email"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-success" value="Find" />
+			</div>
+		</form>
+		<form method="post" asp-action="UpdateMember">
+			<input asp-for="Email" type="email" type="hidden" />
+			<div asp-validation-summary="ValidationSummary.ModelOnly"></div>
+			<div class="form-group">
+				<label asp-for="FirstName">First Name: </label>
+				<input asp-for="FirstName" type="text" class="form-control" />
+				<span asp-validation-for="FirstName"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LastName">Last Name: </label>
+				<input asp-for="LastName" type="text" class="form-control" />
+				<span asp-validation-for="LastName"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Address1">Address 1</label>
+				<input asp-for="Address1" type="text" class="form-control" />
+				<span asp-validation-for="Address1"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Address2">Address 2</label>
+				<input asp-for="Address2" type="text" class="form-control" />
+				<span asp-validation-for="Address2"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Address3">Address 3</label>
+				<input asp-for="Address3" type="text" class="form-control" />
+				<span asp-validation-for="Address3"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="City">City</label>
+				<input asp-for="City" type="text" class="form-control" />
+				<span asp-validation-for="City"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Province">Province</label>
+				<input asp-for="Province" type="text" class="form-control" />
+				<span asp-validation-for="Province"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Country">Country</label>
+				<input asp-for="Country" type="text" class="form-control" />
+				<span asp-validation-for="Country"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="PostalCode">Postal Code</label>
+				<input asp-for="PostalCode" type="text" class="form-control" />
+				<span asp-validation-for="PostalCode"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Password">Password</label>
+				<input asp-for="Password" class="form-control" type="password" />
+				<span asp-validation-for="Password"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="PasswordConfirm">Confirm Password</label>
+				<input asp-for="PasswordConfirm" class="form-control" type="password" />
+				<span asp-validation-for="PasswordConfirm"></span>
+			</div>
+			<div class="form-group">
+				<a asp-controller="Home" asp-action="Index" class="btn btn-default">Cancel</a>
+				<input type="submit" class="btn btn-success" value="Save" />
+			</div>
+		</form>
+	</div>
+</div>

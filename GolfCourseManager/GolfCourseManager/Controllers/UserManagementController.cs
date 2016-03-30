@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GolfCourseManager.Models;
 using GolfCourseManager.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using System;
@@ -119,6 +120,53 @@ namespace GolfCourseManager.Controllers
 			}
 
 			return RedirectToAction("Index", "Home");
+		}
+
+		[Authorize(Roles = "admin")]
+		[HttpGet]
+		public async Task<IActionResult> ViewMember(Member member)
+		{
+			string email;
+
+			if (member == null || string.IsNullOrEmpty(member.Email))
+			{
+				//TODO: Figure out how to default to the current user.
+				email = "admin@gcm.com";
+			}
+			else
+			{
+				email = member.Email;
+			}
+
+			member = await _userManager.FindByEmailAsync(email);
+			
+			var memberVM = Mapper.Map<MemberViewModel>(member);
+
+			return View(memberVM);
+		}
+
+		[Authorize(Roles = "admin")]
+		[HttpPost]
+		public async Task<IActionResult> UpdateMember(MemberViewModel vm)
+		{
+			var dbMember = await _userManager.FindByEmailAsync(vm.Email);
+			dbMember.Address1 = vm.Address1;
+			dbMember.Address2 = vm.Address2;
+			dbMember.Address3 = vm.Address3;
+			dbMember.City = vm.City;
+			dbMember.FirstName = vm.FirstName;
+			dbMember.LastName = vm.LastName;	
+			dbMember.PostalCode = vm.PostalCode;
+			dbMember.Province = vm.Province;
+
+			var result = await _userManager.UpdateAsync(dbMember);
+			var resultsVM = new MemberUpdateResultsViewModel()
+			{
+				Success = result.Succeeded,
+				Name = dbMember.NormalizedUserName
+			};
+
+			return View(resultsVM);
 		}
 	}
 }

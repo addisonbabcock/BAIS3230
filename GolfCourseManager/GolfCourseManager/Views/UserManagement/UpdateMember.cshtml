@@ -1,0 +1,18 @@
+﻿@model GolfCourseManager.ViewModels.MemberUpdateResultsViewModel
+@{
+	ViewBag.Title = "Member Update Results";
+}
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h1>Golf Course Manager - @ViewBag.Title</h1>
+		@if (Model.Success)
+		{
+			<h3 class="text-success">Update for @Model.Name succeeded.</h3>
+		}
+		else
+		{
+			<h3 class="text-warning">Update for @Model.Name failed.</h3>
+		}
+	</div>
+</div>
