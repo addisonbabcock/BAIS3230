@@ -1,4 +1,4 @@
-@model GolfCourseManager.Models.Score
+@model GolfCourseManager.ViewModels.EnterScoreViewModel
 
 @{
 	ViewData["Title"] = "Create";
@@ -12,23 +12,32 @@
         <h4>Score</h4>
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="PlayerName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="PlayerName" class="form-control" />
-                <span asp-validation-for="PlayerName" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Strokes" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Strokes" class="form-control" />
-                <span asp-validation-for="Strokes" class="text-danger" />
-            </div>
-        </div>
+		<div class="form-group">
+			<label asp-for="TeeTime" class="col-md-2 control-label">Tee Time</label>
+			<div class="col-md-10">
+				<select asp-for="TeeTime">
+					@foreach (var teeTime in Model.SelectableTeeTimes)
+					{
+						<option value="@teeTime.ToString()">@teeTime.ToString()</option>
+					}
+				</select>
+				<span asp-validation-for="TeeTime" class="text-danger" />
+			</div>
+		</div>
+		@for (int hole = 1; hole <= 18; ++hole)
+		{
+			//TODO: Can I use variables in razor syntax?
+			//@string holeName = "Hole" + hole;
+			<div class="form-group">
+				<label asp-for="Hole1" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Hole1" class="form-control" />
+				</div>
+			</div>
+		}
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </div>
     </div>

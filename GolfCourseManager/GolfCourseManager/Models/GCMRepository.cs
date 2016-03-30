@@ -92,5 +92,14 @@ namespace GolfCourseManager.Models
 			_context.TeeTimes.Add(teeTime);
 			return _context.SaveChanges() != 0;
 		}
+		public List<TeeTime> GetTeeTimesWithoutScore(Member member)
+		{
+			return _context.TeeTimes
+				.Where(teeTime => teeTime.Member.Id == member.Id)
+				.Where(teeTime =>
+					_context.Scores.Where(score => score.TeeTime == teeTime).Count() == 0)
+				.OrderBy(teeTime => teeTime.Start)
+				.ToList();
+		}
 	}
 }

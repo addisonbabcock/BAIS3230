@@ -4,16 +4,19 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using GolfCourseManager.Models;
+using GolfCourseManager.ViewModels;
 
 namespace GolfCourseManager.Controllers
 {
     public class ScoresController : Controller
     {
-        private GCMContext _context;
+        private GCMContext _context;			//TODO: Refactor to not use the context
+		private GCMRepository _gcmRepo;
 
-        public ScoresController(GCMContext context)
+		public ScoresController(GCMContext context, GCMRepository repo)
         {
-            _context = context;    
+            _context = context;
+			_gcmRepo = repo;
         }
 
         // GET: Scores
@@ -42,6 +45,9 @@ namespace GolfCourseManager.Controllers
         // GET: Scores/Create
         public IActionResult Create()
         {
+			var vm = new EnterScoreViewModel();
+			Member member;			//TODO: Grab the current user
+			var teeTimes = _gcmRepo.GetTeeTimesWithoutScore(member);
             return View();
         }
 
