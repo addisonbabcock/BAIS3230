@@ -92,14 +92,38 @@ namespace GolfCourseManager.Models
 			_context.TeeTimes.Add(teeTime);
 			return _context.SaveChanges() != 0;
 		}
+
 		public List<TeeTime> GetTeeTimesWithoutScore(Member member)
 		{
 			return _context.TeeTimes
 				.Where(teeTime => teeTime.Member.Id == member.Id)
 				.Where(teeTime =>
-					_context.Scores.Where(score => score.TeeTime == teeTime).Count() == 0)
+					_context.Scores.Where(score => score.TeeTime.Start == teeTime.Start).Count() == 0)
 				.OrderBy(teeTime => teeTime.Start)
 				.ToList();
+		}
+
+		public void AddScore(Score score)
+		{
+			_context.Scores.Add(score);
+		}
+
+		public async Task<Member> GetMemberFromUserAsync(ClaimsPrincipal user)
+		{
+			return await _userManager.FindByNameAsync(user.Identity.Name);
+		}
+
+		public async Task SaveScoresAsync()
+		{
+			await _context.SaveChangesAsync();
+		}
+
+		public Hole GetHole(GolfCourse golfCourse, int holeNumber)
+		{
+			return _context.Holes
+				.Where(hole => hole.GolfCourse == golfCourse)
+				.Where(hole => hole.HoleNumber == holeNumber)
+				.FirstOrDefault();
 		}
 	}
 }

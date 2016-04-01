@@ -2,9 +2,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Identity;
 using Microsoft.Data.Entity;
 using GolfCourseManager.Models;
 using GolfCourseManager.ViewModels;
+using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace GolfCourseManager.Controllers
 {
@@ -43,26 +46,40 @@ namespace GolfCourseManager.Controllers
         }
 
         // GET: Scores/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
 			var vm = new EnterScoreViewModel();
-			Member member;			//TODO: Grab the current user
+			var member = await _gcmRepo.GetLoggedInMemberAsync(User);
 			var teeTimes = _gcmRepo.GetTeeTimesWithoutScore(member);
-            return View();
+
+			vm.SelectableTeeTimes = new List<System.DateTime>();
+			foreach (var teeTime in teeTimes)
+			{
+				vm.SelectableTeeTimes.Add(teeTime.Start);
+			}
+
+            return View(vm);
         }
 
         // POST: Scores/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Score score)
+        public async Task<IActionResult> Create(EnterScoreViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                _context.Scores.Add(score);
-                await _context.SaveChangesAsync();
+				var member = await _gcmRepo.GetLoggedInMemberAsync(User);
+				var score = new Score();
+				score.Member = member;
+				score.GolfCourse = _gcmRepo.GetGolfCourse();
+				score.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 1);
+				score.PlayerName = member.GetFullName();
+				score.Strokes = vm.Hole1;
+				_gcmRepo.AddScore(score);
+				await _gcmRepo.SaveScoresAsync();
                 return RedirectToAction("Index");
             }
-            return View(score);
+            return View(vm);
         }
     }
 }

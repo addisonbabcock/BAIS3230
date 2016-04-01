@@ -24,17 +24,12 @@
 				<span asp-validation-for="TeeTime" class="text-danger" />
 			</div>
 		</div>
-		@for (int hole = 1; hole <= 18; ++hole)
-		{
-			//TODO: Can I use variables in razor syntax?
-			//@string holeName = "Hole" + hole;
 			<div class="form-group">
 				<label asp-for="Hole1" class="col-md-2 control-label"></label>
 				<div class="col-md-10">
 					<input asp-for="Hole1" class="form-control" />
 				</div>
 			</div>
-		}
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-success" />
