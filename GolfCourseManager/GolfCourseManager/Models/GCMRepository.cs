@@ -118,6 +118,14 @@ namespace GolfCourseManager.Models
 				.ToList();
 		}
 
+		public List<Score> GetScoresForTeeTime(TeeTime teeTime)
+		{
+			return _context.Scores
+				.Where(score => score.TeeTime.Start == teeTime.Start)
+				.OrderBy(score => score.Hole.HoleNumber)
+				.ToList();
+		}
+
 		public TeeTime GetTeeTime(DateTime startTime)
 		{
 			return _context.TeeTimes

@@ -25,7 +25,27 @@ namespace GolfCourseManager.Controllers
         // GET: Scores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Scores.ToListAsync());
+			var member = await _gcmRepo.GetLoggedInMemberAsync(User);
+			var vm = new ScoresIndexViewModel();
+			vm.Results = new List<ScoresIndexViewModel.Row>();
+
+			var teeTimes = _gcmRepo.GetTeeTimesWithScore(member);
+
+			foreach (var teeTime in teeTimes)
+			{
+				var result = new ScoresIndexViewModel.Row();
+				result.StartTime = teeTime.Start;
+				var scores = _gcmRepo.GetScoresForTeeTime(teeTime);
+
+				foreach (var score in scores)
+				{
+					result.Strokes += score.Strokes;
+				}
+
+				vm.Results.Add(result);
+			}
+
+			return View(vm);
         }
 
         // GET: Scores/Details/5
@@ -104,7 +124,7 @@ namespace GolfCourseManager.Controllers
 				score4.PlayerName = member.GetFullName();
 				score4.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
 				score4.Strokes = vm.Hole4;
-				_gcmRepo.AddScore(score2);
+				_gcmRepo.AddScore(score4);
 
 				var score5 = new Score();
 				score5.Member = member;

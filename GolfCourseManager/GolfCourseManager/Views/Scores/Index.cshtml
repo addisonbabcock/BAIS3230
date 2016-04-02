@@ -1,7 +1,7 @@
-@model IEnumerable<GolfCourseManager.Models.Score>
+@model GolfCourseManager.ViewModels.ScoresIndexViewModel
 
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "Previous Results";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,24 +13,24 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PlayerName)
+			Tee Time
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Strokes)
+            Score
         </th>
         <th></th>
     </tr>
     
-@foreach (var item in Model) {
+@foreach (var item in Model.Results) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.PlayerName)
+            @item.StartTime
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Strokes)
+            @item.Strokes
         </td>
         <td>
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            <a asp-action="Details" asp-route-id="@item.StartTime">Details</a>
         </td>
     </tr>
 }
