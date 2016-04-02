@@ -64,12 +64,17 @@ namespace GolfCourseManager.Models
 
 		public List<TeeTime> GetReservedTeeTimesForDate(DateTime date)
 		{
-			return _context.TeeTimes.Where(t => t.Start.Date == date.Date).OrderBy(t => t.Start).ToList();
+			return _context.TeeTimes
+				.Where(t => t.Start.Date == date.Date)
+				.OrderBy(t => t.Start)
+				.ToList();
 		}
 
 		public TeeTime GetReservedTeeTimeByStart(DateTime start)
 		{
-			return _context.TeeTimes.Where(t => t.Start == start).FirstOrDefault();
+			return _context.TeeTimes
+				.Where(t => t.Start == start)
+				.FirstOrDefault();
 		}
 
 		public bool ReserveTeeTime(TeeTime teeTime)
@@ -103,6 +108,23 @@ namespace GolfCourseManager.Models
 				.ToList();
 		}
 
+		public List<TeeTime> GetTeeTimesWithScore(Member member)
+		{
+			return _context.TeeTimes
+				.Where(teeTime => teeTime.Member.Id == member.Id)
+				.Where(teeTime =>
+					_context.Scores.Where(score => score.TeeTime.Start == teeTime.Start).Count() != 0)
+				.OrderBy(teeTime => teeTime.Start)
+				.ToList();
+		}
+
+		public TeeTime GetTeeTime(DateTime startTime)
+		{
+			return _context.TeeTimes
+				.Where(teeTime => teeTime.Start == startTime)
+				.FirstOrDefault();
+		}
+
 		public void AddScore(Score score)
 		{
 			_context.Scores.Add(score);
@@ -121,7 +143,7 @@ namespace GolfCourseManager.Models
 		public Hole GetHole(GolfCourse golfCourse, int holeNumber)
 		{
 			return _context.Holes
-				.Where(hole => hole.GolfCourse == golfCourse)
+				.Where(hole => hole.GolfCourse.Id == golfCourse.Id)
 				.Where(hole => hole.HoleNumber == holeNumber)
 				.FirstOrDefault();
 		}

@@ -69,13 +69,169 @@ namespace GolfCourseManager.Controllers
             if (ModelState.IsValid)
             {
 				var member = await _gcmRepo.GetLoggedInMemberAsync(User);
-				var score = new Score();
-				score.Member = member;
-				score.GolfCourse = _gcmRepo.GetGolfCourse();
-				score.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 1);
-				score.PlayerName = member.GetFullName();
-				score.Strokes = vm.Hole1;
-				_gcmRepo.AddScore(score);
+
+				var score1 = new Score();
+				score1.Member = member;
+				score1.GolfCourse = _gcmRepo.GetGolfCourse();
+				score1.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 1);
+				score1.PlayerName = member.GetFullName();
+				score1.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score1.Strokes = vm.Hole1;
+				_gcmRepo.AddScore(score1);
+
+				var score2 = new Score();
+				score2.Member = member;
+				score2.GolfCourse = _gcmRepo.GetGolfCourse();
+				score2.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 2);
+				score2.PlayerName = member.GetFullName();
+				score2.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score2.Strokes = vm.Hole2;
+				_gcmRepo.AddScore(score2);
+
+				var score3 = new Score();
+				score3.Member = member;
+				score3.GolfCourse = _gcmRepo.GetGolfCourse();
+				score3.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 3);
+				score3.PlayerName = member.GetFullName();
+				score3.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score3.Strokes = vm.Hole3;
+				_gcmRepo.AddScore(score3);
+
+				var score4 = new Score();
+				score4.Member = member;
+				score4.GolfCourse = _gcmRepo.GetGolfCourse();
+				score4.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 4);
+				score4.PlayerName = member.GetFullName();
+				score4.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score4.Strokes = vm.Hole4;
+				_gcmRepo.AddScore(score2);
+
+				var score5 = new Score();
+				score5.Member = member;
+				score5.GolfCourse = _gcmRepo.GetGolfCourse();
+				score5.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 5);
+				score5.PlayerName = member.GetFullName();
+				score5.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score5.Strokes = vm.Hole5;
+				_gcmRepo.AddScore(score5);
+
+				var score6 = new Score();
+				score6.Member = member;
+				score6.GolfCourse = _gcmRepo.GetGolfCourse();
+				score6.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 6);
+				score6.PlayerName = member.GetFullName();
+				score6.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score6.Strokes = vm.Hole6;
+				_gcmRepo.AddScore(score6);
+
+				var score7 = new Score();
+				score7.Member = member;
+				score7.GolfCourse = _gcmRepo.GetGolfCourse();
+				score7.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 7);
+				score7.PlayerName = member.GetFullName();
+				score7.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score7.Strokes = vm.Hole7;
+				_gcmRepo.AddScore(score7);
+
+				var score8 = new Score();
+				score8.Member = member;
+				score8.GolfCourse = _gcmRepo.GetGolfCourse();
+				score8.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 8);
+				score8.PlayerName = member.GetFullName();
+				score8.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score8.Strokes = vm.Hole8;
+				_gcmRepo.AddScore(score8);
+
+				var score9 = new Score();
+				score9.Member = member;
+				score9.GolfCourse = _gcmRepo.GetGolfCourse();
+				score9.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 9);
+				score9.PlayerName = member.GetFullName();
+				score9.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score9.Strokes = vm.Hole9;
+				_gcmRepo.AddScore(score9);
+
+				var score10 = new Score();
+				score10.Member = member;
+				score10.GolfCourse = _gcmRepo.GetGolfCourse();
+				score10.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 10);
+				score10.PlayerName = member.GetFullName();
+				score10.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score10.Strokes = vm.Hole10;
+				_gcmRepo.AddScore(score10);
+
+				var score11 = new Score();
+				score11.Member = member;
+				score11.GolfCourse = _gcmRepo.GetGolfCourse();
+				score11.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 11);
+				score11.PlayerName = member.GetFullName();
+				score11.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score11.Strokes = vm.Hole11;
+				_gcmRepo.AddScore(score11);
+
+				var score12 = new Score();
+				score12.Member = member;
+				score12.GolfCourse = _gcmRepo.GetGolfCourse();
+				score12.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 12);
+				score12.PlayerName = member.GetFullName();
+				score12.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score12.Strokes = vm.Hole12;
+				_gcmRepo.AddScore(score12);
+
+				var score13 = new Score();
+				score13.Member = member;
+				score13.GolfCourse = _gcmRepo.GetGolfCourse();
+				score13.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 13);
+				score13.PlayerName = member.GetFullName();
+				score13.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score13.Strokes = vm.Hole13;
+				_gcmRepo.AddScore(score13);
+
+				var score14 = new Score();
+				score14.Member = member;
+				score14.GolfCourse = _gcmRepo.GetGolfCourse();
+				score14.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 14);
+				score14.PlayerName = member.GetFullName();
+				score14.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score14.Strokes = vm.Hole14;
+				_gcmRepo.AddScore(score14);
+
+				var score15 = new Score();
+				score15.Member = member;
+				score15.GolfCourse = _gcmRepo.GetGolfCourse();
+				score15.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 15);
+				score15.PlayerName = member.GetFullName();
+				score15.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score15.Strokes = vm.Hole15;
+				_gcmRepo.AddScore(score15);
+
+				var score16 = new Score();
+				score16.Member = member;
+				score16.GolfCourse = _gcmRepo.GetGolfCourse();
+				score16.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 16);
+				score16.PlayerName = member.GetFullName();
+				score16.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score16.Strokes = vm.Hole16;
+				_gcmRepo.AddScore(score16);
+
+				var score17 = new Score();
+				score17.Member = member;
+				score17.GolfCourse = _gcmRepo.GetGolfCourse();
+				score17.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 17);
+				score17.PlayerName = member.GetFullName();
+				score17.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score17.Strokes = vm.Hole17;
+				_gcmRepo.AddScore(score17);
+
+				var score18 = new Score();
+				score18.Member = member;
+				score18.GolfCourse = _gcmRepo.GetGolfCourse();
+				score18.Hole = _gcmRepo.GetHole(_gcmRepo.GetGolfCourse(), 18);
+				score18.PlayerName = member.GetFullName();
+				score18.TeeTime = _gcmRepo.GetTeeTime(vm.TeeTime);
+				score18.Strokes = vm.Hole18;
+				_gcmRepo.AddScore(score18);
+
 				await _gcmRepo.SaveScoresAsync();
                 return RedirectToAction("Index");
             }
