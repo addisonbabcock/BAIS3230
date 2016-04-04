@@ -8,17 +8,16 @@ using GolfCourseManager.Models;
 using GolfCourseManager.ViewModels;
 using System.Security.Claims;
 using System.Collections.Generic;
+using System;
 
 namespace GolfCourseManager.Controllers
 {
     public class ScoresController : Controller
     {
-        private GCMContext _context;			//TODO: Refactor to not use the context
 		private GCMRepository _gcmRepo;
 
-		public ScoresController(GCMContext context, GCMRepository repo)
-        {
-            _context = context;
+		public ScoresController(GCMRepository repo)
+		{
 			_gcmRepo = repo;
         }
 
@@ -28,6 +27,7 @@ namespace GolfCourseManager.Controllers
 			var member = await _gcmRepo.GetLoggedInMemberAsync(User);
 			var vm = new ScoresIndexViewModel();
 			vm.Results = new List<ScoresIndexViewModel.Row>();
+			vm.GolfCourseId = _gcmRepo.GetGolfCourse().Id;
 
 			var teeTimes = _gcmRepo.GetTeeTimesWithScore(member);
 
@@ -35,6 +35,7 @@ namespace GolfCourseManager.Controllers
 			{
 				var result = new ScoresIndexViewModel.Row();
 				result.StartTime = teeTime.Start;
+				result.TeeTimeId = teeTime.Id;
 				var scores = _gcmRepo.GetScoresForTeeTime(teeTime);
 
 				foreach (var score in scores)
@@ -48,21 +49,35 @@ namespace GolfCourseManager.Controllers
 			return View(vm);
         }
 
-        // GET: Scores/Details/5
-        public async Task<IActionResult> Details(int? id)
+		[HttpGet]
+		[Route("Scores/Details/{id}")]
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
+			var vm = new EnterScoreViewModel();
+			var teeTime = _gcmRepo.GetTeeTime(id);
+			var scores = _gcmRepo.GetScoresForTeeTime(teeTime);
 
-            Score score = await _context.Scores.SingleAsync(m => m.Id == id);
-            if (score == null)
-            {
-                return HttpNotFound();
-            }
+			vm.TeeTime = teeTime.Start;
+			vm.Hole1 = scores.Where(score => score.Hole.HoleNumber == 1).FirstOrDefault().Strokes;
+			vm.Hole2 = scores.Where(score => score.Hole.HoleNumber == 2).FirstOrDefault().Strokes;
+			vm.Hole3 = scores.Where(score => score.Hole.HoleNumber == 3).FirstOrDefault().Strokes;
+			vm.Hole4 = scores.Where(score => score.Hole.HoleNumber == 4).FirstOrDefault().Strokes;
+			vm.Hole5 = scores.Where(score => score.Hole.HoleNumber == 5).FirstOrDefault().Strokes;
+			vm.Hole6 = scores.Where(score => score.Hole.HoleNumber == 6).FirstOrDefault().Strokes;
+			vm.Hole7 = scores.Where(score => score.Hole.HoleNumber == 7).FirstOrDefault().Strokes;
+			vm.Hole8 = scores.Where(score => score.Hole.HoleNumber == 8).FirstOrDefault().Strokes;
+			vm.Hole9 = scores.Where(score => score.Hole.HoleNumber == 9).FirstOrDefault().Strokes;
+			vm.Hole10 = scores.Where(score => score.Hole.HoleNumber == 10).FirstOrDefault().Strokes;
+			vm.Hole11 = scores.Where(score => score.Hole.HoleNumber == 11).FirstOrDefault().Strokes;
+			vm.Hole12 = scores.Where(score => score.Hole.HoleNumber == 12).FirstOrDefault().Strokes;
+			vm.Hole13 = scores.Where(score => score.Hole.HoleNumber == 13).FirstOrDefault().Strokes;
+			vm.Hole14 = scores.Where(score => score.Hole.HoleNumber == 14).FirstOrDefault().Strokes;
+			vm.Hole15 = scores.Where(score => score.Hole.HoleNumber == 15).FirstOrDefault().Strokes;
+			vm.Hole16 = scores.Where(score => score.Hole.HoleNumber == 16).FirstOrDefault().Strokes;
+			vm.Hole17 = scores.Where(score => score.Hole.HoleNumber == 17).FirstOrDefault().Strokes;
+			vm.Hole18 = scores.Where(score => score.Hole.HoleNumber == 18).FirstOrDefault().Strokes;
 
-            return View(score);
+			return View(vm);
         }
 
         // GET: Scores/Create

@@ -1,31 +1,62 @@
-@model GolfCourseManager.Models.Score
+@model GolfCourseManager.ViewModels.EnterScoreViewModel
 
 @{
-	ViewData["Title"] = "Details";
+	ViewData["Title"] = "View Score";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>Score</h4>
+    <h4>Score for @Model.TeeTime</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayerName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PlayerName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Strokes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Strokes)
-        </dd>
-    </dl>
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Hole</th>
+				<th>1</th>
+				<th>2</th>
+				<th>3</th>
+				<th>4</th>
+				<th>5</th>
+				<th>6</th>
+				<th>7</th>
+				<th>8</th>
+				<th>9</th>
+				<th>10</th>
+				<th>11</th>
+				<th>12</th>
+				<th>13</th>
+				<th>14</th>
+				<th>15</th>
+				<th>16</th>
+				<th>17</th>
+				<th>18</th>
+			</tr>
+		</thead>
+		<tr>
+			<td>Score</td>
+			<td>@Model.Hole1</td>
+			<td>@Model.Hole2</td>
+			<td>@Model.Hole3</td>
+			<td>@Model.Hole4</td>
+			<td>@Model.Hole5</td>
+			<td>@Model.Hole6</td>
+			<td>@Model.Hole7</td>
+			<td>@Model.Hole8</td>
+			<td>@Model.Hole9</td>
+			<td>@Model.Hole10</td>
+			<td>@Model.Hole11</td>
+			<td>@Model.Hole12</td>
+			<td>@Model.Hole13</td>
+			<td>@Model.Hole14</td>
+			<td>@Model.Hole15</td>
+			<td>@Model.Hole16</td>
+			<td>@Model.Hole17</td>
+			<td>@Model.Hole18</td>
+		</tr>
+	</table>
 </div>
 <p>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </p>

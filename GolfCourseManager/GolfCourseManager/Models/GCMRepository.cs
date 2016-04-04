@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using GolfCourseManager.BusinessLogic;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
 
 namespace GolfCourseManager.Models
 {
-    public class GCMRepository
+	public class GCMRepository
     {
 		public GCMRepository(GCMContext context, UserManager<Member> userManager, RoleManager<IdentityRole> roleManager)
 		{
@@ -70,6 +71,13 @@ namespace GolfCourseManager.Models
 				.ToList();
 		}
 
+		public TeeTime GetTeeTime(int teeTimeId)
+		{
+			return _context.TeeTimes
+				.Where(teeTime => teeTime.Id == teeTimeId)
+				.FirstOrDefault();
+		}
+
 		public TeeTime GetReservedTeeTimeByStart(DateTime start)
 		{
 			return _context.TeeTimes
@@ -120,15 +128,30 @@ namespace GolfCourseManager.Models
 
 		public List<Score> GetScoresForTeeTime(TeeTime teeTime)
 		{
-			return _context.Scores
+			return GetScoresForTeeTime(GetGolfCourse().Id, teeTime);
+		}
+
+		public List<Score> GetScoresForTeeTime(int golfCourseId, TeeTime teeTime)
+		{
+			var scores = _context.Scores
+				.Include(score => score.Hole);
+
+			return scores
+				.Where(score => score.GolfCourse.Id == golfCourseId)
 				.Where(score => score.TeeTime.Start == teeTime.Start)
-				.OrderBy(score => score.Hole.HoleNumber)
+			//	.OrderBy(score => score.Hole.HoleNumber)
 				.ToList();
 		}
 
 		public TeeTime GetTeeTime(DateTime startTime)
 		{
+			return GetTeeTime(GetGolfCourse().Id, startTime);
+		}
+
+		public TeeTime GetTeeTime(int golfCourseId, DateTime startTime)
+		{
 			return _context.TeeTimes
+				.Where(teeTime => teeTime.GolfCourse.Id == golfCourseId)
 				.Where(teeTime => teeTime.Start == startTime)
 				.FirstOrDefault();
 		}

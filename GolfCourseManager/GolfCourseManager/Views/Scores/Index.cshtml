@@ -5,7 +5,7 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewData["Title"]</h2>
 
 <p>
     <a asp-action="Create">Enter Score</a>
@@ -30,7 +30,7 @@
             @item.Strokes
         </td>
         <td>
-            <a asp-action="Details" asp-route-id="@item.StartTime">Details</a>
+            <a asp-controller="Scores" asp-action="Details" asp-route-id="@item.TeeTimeId">Details</a>
         </td>
     </tr>
 }

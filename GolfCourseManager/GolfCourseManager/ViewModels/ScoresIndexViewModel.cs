@@ -11,8 +11,10 @@ namespace GolfCourseManager.ViewModels
 		{
 			public DateTime StartTime { get; set; }
 			public int Strokes { get; set; }
+			public int TeeTimeId { get; set; }
 		}
 
 		public List<Row> Results { get; set; }
-    }
+		public int GolfCourseId { get; set; }
+	}
 }
