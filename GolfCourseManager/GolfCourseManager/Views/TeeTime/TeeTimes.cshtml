@@ -7,6 +7,8 @@
 
 <h2>@ViewBag.Title</h2>
 
+@if (User.IsInRole("admin"))
+{
 <form asp-action="TeeTimes" method="get">
 	<h4>Select Date</h4>
 	<hr />
@@ -20,6 +22,7 @@
 		<input type="submit" value="Select" class="btn btn-success" />
 	</div>
 </form>
+}
 
 <div>
 	<table class="table table-responsive">
@@ -36,7 +39,14 @@
 			@foreach (var reservation in Model.Reservations)
 			{
 				<tr>
+					@if (User.IsInRole("admin"))
+					{
 					<td>@reservation.StartTime.TimeOfDay</td>
+					}
+					else
+					{
+					<td>@reservation.StartTime.ToString()</td>
+					}
 					<td>@reservation.Player1Name</td>
 					<td>@reservation.Player2Name</td>
 					<td>@reservation.Player3Name</td>

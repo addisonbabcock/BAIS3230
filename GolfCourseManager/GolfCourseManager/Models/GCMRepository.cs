@@ -71,6 +71,15 @@ namespace GolfCourseManager.Models
 				.ToList();
 		}
 
+		public List<TeeTime> GetReservedTeeTimesForMember(Member member)
+		{
+			return _context.TeeTimes
+				.Where(teeTime => teeTime.Member.Id == member.Id)
+				.Where(teeTime => teeTime.Start >= DateTime.Now)
+				.OrderBy(teeTime => teeTime.Start)
+				.ToList();
+		}
+
 		public TeeTime GetTeeTime(int teeTimeId)
 		{
 			return _context.TeeTimes

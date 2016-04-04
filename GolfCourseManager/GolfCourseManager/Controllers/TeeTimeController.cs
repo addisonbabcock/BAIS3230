@@ -155,9 +155,9 @@ namespace GolfCourseManager.Controllers
 			return View(rcvm);
 		}
 
-		[Authorize(Roles = "admin")]
+		[Authorize]
 		[HttpGet]
-		public IActionResult TeeTimes(DateTime date)
+		public async Task<IActionResult> TeeTimes(DateTime date)
 		{
 			var vm = new DailyTeeTimesViewModel();
 			if (date == DateTime.MinValue)
@@ -169,7 +169,12 @@ namespace GolfCourseManager.Controllers
 				vm.Date = date;
 			}
 
-			var reservations = _gcmRepo.GetReservedTeeTimesForDate(vm.Date);
+			List<TeeTime> reservations;
+			if (User.IsInRole("admin"))
+				reservations = _gcmRepo.GetReservedTeeTimesForDate(vm.Date);
+			else
+				reservations = _gcmRepo.GetReservedTeeTimesForMember(await _gcmRepo.GetLoggedInMemberAsync(User));
+
 			vm.Reservations = new List<ReserveViewModel>();
 			foreach (var reservation in reservations)
 			{
