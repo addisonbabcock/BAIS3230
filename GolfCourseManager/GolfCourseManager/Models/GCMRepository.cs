@@ -135,6 +135,16 @@ namespace GolfCourseManager.Models
 				.ToList();
 		}
 
+		public List<TeeTime> GetTeeTimesWithScore()
+		{
+			return _context.TeeTimes
+				.Where(teeTime =>
+					_context.Scores.Where(score => score.TeeTime.Start == teeTime.Start).Count() != 0)
+				.Include(teeTime => teeTime.Member)
+			//	.OrderBy(teeTime => teeTime.Start)
+				.ToList();
+		}
+
 		public List<Score> GetScoresForTeeTime(TeeTime teeTime)
 		{
 			return GetScoresForTeeTime(GetGolfCourse().Id, teeTime);

@@ -9,6 +9,7 @@ namespace GolfCourseManager.ViewModels
     {
 		public class Row
 		{
+			public string MemberName { get; set; }
 			public DateTime StartTime { get; set; }
 			public int Strokes { get; set; }
 			public int TeeTimeId { get; set; }

@@ -12,6 +12,9 @@
 </p>
 <table class="table">
     <tr>
+		<th>
+			Reserving Member
+		</th>
         <th>
 			Tee Time
         </th>
@@ -23,6 +26,9 @@
     
 @foreach (var item in Model.Results) {
     <tr>
+		<td>
+			@item.MemberName
+		</td>
         <td>
             @item.StartTime
         </td>

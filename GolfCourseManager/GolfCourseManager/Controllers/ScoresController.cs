@@ -24,16 +24,29 @@ namespace GolfCourseManager.Controllers
         // GET: Scores
         public async Task<IActionResult> Index()
         {
-			var member = await _gcmRepo.GetLoggedInMemberAsync(User);
 			var vm = new ScoresIndexViewModel();
 			vm.Results = new List<ScoresIndexViewModel.Row>();
 			vm.GolfCourseId = _gcmRepo.GetGolfCourse().Id;
 
-			var teeTimes = _gcmRepo.GetTeeTimesWithScore(member);
+			List<TeeTime> teeTimes;
+			if (User.IsInRole("admin"))
+			{
+				teeTimes = _gcmRepo.GetTeeTimesWithScore();
+				teeTimes.Sort(delegate (TeeTime a, TeeTime b)
+				{
+					return a.Start.CompareTo(b.Start);
+				});
+			}
+			else
+			{
+				var member = await _gcmRepo.GetLoggedInMemberAsync(User);
+				teeTimes = _gcmRepo.GetTeeTimesWithScore(member);
+			}
 
 			foreach (var teeTime in teeTimes)
 			{
 				var result = new ScoresIndexViewModel.Row();
+				result.MemberName = teeTime.Member.GetFullName();
 				result.StartTime = teeTime.Start;
 				result.TeeTimeId = teeTime.Id;
 				var scores = _gcmRepo.GetScoresForTeeTime(teeTime);
