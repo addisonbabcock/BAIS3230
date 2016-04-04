@@ -84,7 +84,15 @@ namespace GolfCourseManager.Models
 		{
 			return _context.TeeTimes
 				.Where(teeTime => teeTime.Id == teeTimeId)
+				.Include(teeTime => teeTime.Member)
+				.Include(teeTime => teeTime.GolfCourse)
 				.FirstOrDefault();
+		}
+
+		public void UpdateTeeTime(TeeTime teeTime)
+		{
+			_context.Update(teeTime);
+			_context.SaveChanges();
 		}
 
 		public TeeTime GetReservedTeeTimeByStart(DateTime start)

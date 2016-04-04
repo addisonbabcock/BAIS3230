@@ -8,16 +8,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GolfCourseManager.BusinessLogic;
+using Microsoft.AspNet.Identity;
 
 namespace GolfCourseManager.Controllers
 {
     public class TeeTimeController : Controller
     {
+		private UserManager<Member> _userManager;
+
 		private GCMRepository _gcmRepo { get; set; }
 
-		public TeeTimeController(GCMRepository gcmRepo)
+		public TeeTimeController(GCMRepository gcmRepo, UserManager<Member> userManager)
 		{
 			_gcmRepo = gcmRepo;
+			_userManager = userManager;
 		}
 
 		[Authorize]
@@ -184,12 +188,48 @@ namespace GolfCourseManager.Controllers
 					Player2Name = reservation.Player2Name,
 					Player3Name = reservation.Player3Name,
 					Player4Name = reservation.Player4Name,
-					StartTime = reservation.Start
+					StartTime = reservation.Start,
+					Id = reservation.Id,
+					SelectedDate = reservation.Start.Date
 				};
 				vm.Reservations.Add(reserveVM);
 			}
 
 			return View(vm);
+		}
+
+		[Authorize]
+		[HttpGet]
+		public IActionResult Update(int id)
+		{
+			var teeTime = _gcmRepo.GetTeeTime(id);
+
+			if (teeTime == null)
+			{
+				ModelState.AddModelError("", "Could not find reserved tee time.");
+				return View(null);
+			}
+
+			var vm = Mapper.Map<ReserveViewModel>(teeTime);
+			vm.StartTime = DateTime.MinValue.Add(teeTime.Start.TimeOfDay);
+			vm.SelectedDate = teeTime.Start.Date;
+			vm.MemberId = teeTime.Member.Id;
+
+			return View(vm);
+		}
+
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> Update(ReserveViewModel vm)
+		{
+			var teeTime = Mapper.Map<TeeTime>(vm);
+			teeTime.Start = vm.SelectedDate.Add(vm.StartTime.TimeOfDay);
+			teeTime.GolfCourse = _gcmRepo.GetGolfCourse();
+			teeTime.Member = await _userManager.FindByIdAsync(vm.MemberId);
+
+			_gcmRepo.UpdateTeeTime(teeTime);
+
+			return RedirectToAction("TeeTimes", DateTime.MinValue);
 		}
 	}
 }
