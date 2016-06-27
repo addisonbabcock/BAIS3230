@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,7 +12,10 @@ using GolfCourseManager.Models;
 using Newtonsoft.Json.Serialization;
 using AutoMapper;
 using GolfCourseManager.ViewModels;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace GolfCourseManager
 {
@@ -43,13 +45,13 @@ namespace GolfCourseManager
 		{
 			// Add framework services.
 			services.AddEntityFramework()
-				.AddSqlServer()
+				.AddEntityFrameworkSqlServer()
 				.AddDbContext<GCMContext>();
 
-			services.AddMvc(config =>
+			services.AddMvcCore(config =>
 			{
 			})
-			.AddJsonOptions(opt => opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+			.AddJsonFormatters(opt => opt.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
 			services.AddIdentity<Member, IdentityRole>(config =>
 			{
@@ -92,7 +94,7 @@ namespace GolfCourseManager
 				catch { }
 			}
 
-			app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+			//app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
 			app.UseStaticFiles();
 
@@ -115,6 +117,17 @@ namespace GolfCourseManager
 		}
 
 		// Entry point for the application.
-		public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+		public static void Main(string[] args)
+		{
+			var host = new WebHostBuilder()
+		//		.UseApplicationBasePath(Directory.GetCurrentDirectory())
+		//		.UseDefaultConfiguration()
+		//		.UseIISPlatformHandlerUrl()
+				.UseStartup<Startup>()
+				.UseKestrel()
+				.Build();
+
+			host.Run();
+		}
 	}
 }

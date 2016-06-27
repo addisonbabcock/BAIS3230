@@ -1,14 +1,9 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Identity;
-using Microsoft.Data.Entity;
 using GolfCourseManager.Models;
 using GolfCourseManager.ViewModels;
-using System.Security.Claims;
 using System.Collections.Generic;
-using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GolfCourseManager.Controllers
 {
